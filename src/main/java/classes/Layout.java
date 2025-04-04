@@ -942,7 +942,7 @@ public class Layout {
         }
     }
 
-    public void resetBoard(){
+    public void resetBoard(boolean forever){
         if(whichrotation){
             rotatePieces(disgustingGridPane);
         }
@@ -962,8 +962,11 @@ public class Layout {
         AIcolor = 1;
         gameHasStarted = false;
         checkMateChecking = false;
-        vsAI = false;
-        AIvsAI = false;
+        if(!forever){
+            vsAI = false;
+            AIvsAI = false;
+            AIcolor = 0;
+        }
         checkmateReturnBoolean = false;
         nGames++;
         System.out.println(nGames);
@@ -1114,7 +1117,7 @@ public class Layout {
                 amountofMoves++;
                 AIcolor = (AIcolor + 1)%2;
                 if(amountofMoves > 350){
-                    resetBoard();
+                    resetBoard(true);
                     initializetest();
                 }
                 AImove();

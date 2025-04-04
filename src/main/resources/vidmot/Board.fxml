@@ -25,7 +25,7 @@
                     <Button onAction="#select" styleClass="takki" text="select"></Button>
                     <Label fx:id="feedback1" styleClass="feedback"></Label>
                     <Label fx:id="feedback2" styleClass="feedback"></Label>
-                    <Button onAction="#undo" styleClass="takki" text="undo"/>
+                    <Button onAction="#undo" styleClass="takki" text="undo (won't be implemented)"/>
                     <Button onAction="#reset" styleClass="takki" text="reset"/>
                     <Button onAction="#quit" styleClass="takki" text="quit"/>
                 </VBox>

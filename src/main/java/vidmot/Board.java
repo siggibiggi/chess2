@@ -71,7 +71,7 @@ public class Board {
     public void undo(){
     }
     public void reset(){
-        layout.resetBoard();
+        layout.resetBoard(false);
         layout.initializeBoard(theGrid, feedback1, feedback2, topPane, bottomPane, menuList, onetimerr, twotimerr, buttonPaneone, buttonPanetwo, onetimer, twotimer);
     }
     public void quit(){
