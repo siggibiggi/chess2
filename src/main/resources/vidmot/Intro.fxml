@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+
+<VBox style="-fx-background-color: #333333;" alignment="CENTER" prefHeight="311.0" prefWidth="329.0" spacing="20.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.Intro">
+    <Button onAction="#playervsplayer" styleClass="takki" text="play some chess"/>
+    <Button onAction="#Tol2" styleClass="takki" text="Töl2"/>
+    <Button onAction="#Quit" styleClass="takki" text="Quit"/>
+</VBox>

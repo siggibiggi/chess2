@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+
+<VBox alignment="CENTER" prefHeight="311.0" prefWidth="329.0" spacing="20.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.Board">
+    <padding>
+        <Insets left="20.0" right="20.0"/>
+    </padding>
+        <StackPane>
+            <Pane fx:id="topPane" styleClass="pieceContainer"></Pane>
+            <Pane fx:id="bottomPane" styleClass="pieceContainer"></Pane>
+            <HBox>
+                <Pane fx:id="gridContainer">
+                    <GridPane fx:id="theGrid">
+
+                    </GridPane>
+                </Pane>
+                <VBox styleClass="menucontainer">
+                    <Label style="-fx-pref-height: 40px;"></Label>
+                    <ListView fx:id="menuList" styleClass="menulist"></ListView>
+                    <Button onAction="#select" styleClass="takki" text="select"></Button>
+                    <Label fx:id="feedback1" styleClass="feedback"></Label>
+                    <Label fx:id="feedback2" styleClass="feedback"></Label>
+                    <Button onAction="#undo" styleClass="takki" text="undo"/>
+                    <Button onAction="#reset" styleClass="takki" text="reset"/>
+                    <Button onAction="#quit" styleClass="takki" text="quit"/>
+                </VBox>
+            </HBox>
+            <Pane fx:id="onetimer" styleClass="timePane">
+                <HBox>
+                    <Label fx:id="onetimerr" styleClass="timeLabel"></Label>
+                    <HBox fx:id="buttonPaneone">
+                        <Button onAction="#oneplushour" styleClass="timerButton" text="+"></Button>
+                        <Label text="H"></Label>
+                        <Button onAction="#oneminushour" styleClass="timerButton" text="-"></Button>
+                        <Button onAction="#oneplusmin" styleClass="timerButton" text="+"></Button>
+                        <Label text="M"></Label>
+                        <Button onAction="#oneminusmin" styleClass="timerButton" text="-"></Button>
+                        <Button onAction="#oneplussec" styleClass="timerButton" text="+"></Button>
+                        <Label text="S"></Label>
+                        <Button onAction="#oneminussec" styleClass="timerButton" text="-"></Button>
+                    </HBox>
+                </HBox>
+            </Pane>
+            <Pane fx:id="twotimer" styleClass="timePane">
+                <HBox>
+
+                    <Label fx:id="twotimerr" styleClass="timeLabel"></Label>
+                    <HBox fx:id="buttonPanetwo">
+                        <Button onAction="#twoplushour" styleClass="timerButton" text="+"></Button>
+                        <Label text="H"></Label>
+                        <Button onAction="#twominushour" styleClass="timerButton" text="-"></Button>
+                        <Button onAction="#twoplusmin" styleClass="timerButton" text="+"></Button>
+                        <Label text="M"></Label>
+                        <Button onAction="#twominusmin" styleClass="timerButton" text="-"></Button>
+                        <Button onAction="#twoplussec" styleClass="timerButton" text="+"></Button>
+                        <Label text="S"></Label>
+                        <Button onAction="#twominussec" styleClass="timerButton" text="-"></Button>
+                    </HBox>
+                </HBox>
+            </Pane>
+        </StackPane>
+
+    <!--<Label fx:id="testLabel" text="nothinghappened"></Label>-->
+
+
+
+</VBox>

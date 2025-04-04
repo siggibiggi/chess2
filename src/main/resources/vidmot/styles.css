@@ -1,0 +1,109 @@
+.aPiece {
+    -fx-font-size: 15px;
+    -fx-font-color: red;
+    -fx-wrap-text: true;
+    -fx-text-fill: red;
+}
+
+.moveIndicator {
+}
+
+.kassi {
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-color: black;
+    -fx-background-color: #ADD8E6;
+    -fx-alignment: top-right;
+    -fx-font-size: 20;
+}
+
+.padding{
+    -fx-pref-width: 20;
+    -fx-pref-height: 100;
+}
+
+.reset {
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-color: black;
+    -fx-font-size: 20;
+}
+
+.dots {
+}
+
+.dice {
+    -fx-pref-width: 100;
+    -fx-pref-height: 100;
+    -fx-max-width: 100;
+    -fx-max-height: 100;
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-color: black;
+}
+
+.player {
+    -fx-stroke: black;
+    -fx-stroke-width: 2;
+    -fx-alignment: top-right;
+    -fx-translate-y: 20;
+}
+
+.takki {
+    -fx-pref-height: 20;
+    -fx-pref-width: 250;
+}
+
+.snake {
+    -fx-font-size: 30px;
+}
+
+.feedback {
+    -fx-pref-height: 42.0;
+    -fx-pref-width: 200px;
+    -fx-font-size: 14px;
+    -fx-border-width: 0;
+    -fx-wrap-text: true;
+}
+
+.menucontainer {
+    -fx-padding: 0 0 0 5;
+}
+
+.pieceContainer {
+    -fx-pref-width: 800px;
+    -fx-pref-height: 80px;
+    -fx-max-width: 800px;
+    -fx-max-height: 80px;
+    -fx-layout-x: 100px;
+    -fx-layout-y: 50px;
+}
+
+.menulist {
+    -fx-max-height: 300px;
+    -fx-max-width: 300px;
+}
+
+.timePane {
+    -fx-pref-width: 400px;
+    -fx-pref-height: 40px;
+    -fx-max-width: 400px;
+    -fx-max-height: 40px;
+}
+
+.timeLabel {
+    -fx-pref-height: 28.0;
+    -fx-pref-width: 80;
+    -fx-padding: 5;
+
+    -fx-border-width: 2;
+    -fx-border-style: solid;
+    -fx-border-color: black;
+    -fx-font-size: 20px;
+    -fx-background-color: lightgrey;
+    -fx-alignment: center-right;
+}
