@@ -1,6 +1,7 @@
 package classes;
 
 public class Moves {
+    //region
     int[][] squareStatus = new int[8][8];
     //0 white, 1 black, 2 nothing
     Tuple enPassant;
@@ -18,6 +19,9 @@ public class Moves {
                 squareStatus[j][i] = 2;
             }
         }
+        //every square is neutral. Don't think this is necessary given the literal very next thing
+        //but I'm too scared to move it at this point
+
         /*
         squareStatus[0][0] = 0;
         squareStatus[3][3] = 0;
@@ -36,9 +40,12 @@ public class Moves {
                 }
             }
         }
+        //"colors" squares
+
         for(int i = 0; i<4; i++){
             canCastle[i] = true;
         }
+        //all castling moves start as available
     }
     public class Tuple {
         public int x;
@@ -49,14 +56,31 @@ public class Moves {
             this.y = y;
         }
     }
+    //extremely useful class that I use all over the place. Found online
+
+
     Tuple[] tempPieceLocations = new Tuple[16];
+    //for checkmatecheck
     Tuple[] availableMoves = new Tuple[27];
+    //endregion
+
     public void getMoves(int columnLetter, int rowNumber, String type, int color){
+        //this function is a fucking nightmare, or at least when it comes to creating it, but it's actually quite simple
+        //outside from the pawn, all the pieces have very simple and symmetrical moves
+        //and outside from the knight, all the pieces move in a direction until it stops at a piece
+        //if that piece is an ally, that square is not available
+        //if that square is an enemy, it's red
+        //Same with isitattacked, a lot of this was debugged and filled in via chatgpt, as there's so much repetition
+        //and it's impossible to spot bugs. However, all the ideas and core implementation was mine
+        //and I had to do all the initial entries to repeat off of anyway
+
+
         castlingMove = false;
         for(int i = 0; i<27; i++){
             availableMoves[i] = null;
         }
         int kNum = 0;
+        //clears availablemoves and then adds to it one by one
 
         if(type.equals("pawn")){
             //white
@@ -426,6 +450,10 @@ public class Moves {
         }
     }
     public void getAllTeamPieces(int color){
+        //simply counts all the pieces on the board of a certain color and gives the respective tuple
+        //the fact that the board was 8x8, and squares never moved, was extremely useful
+        //and made it so you didn't necessarily have to connect functions or Nodes or whatever together
+        //because at the end of the day, you always had the coordinates, and that mapped perfectly onto an 8x8 array
         int kNum = 0;
         for(int i = 0; i<16; i++){
             tempPieceLocations[i] = null;

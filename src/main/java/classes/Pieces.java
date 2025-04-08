@@ -41,6 +41,7 @@ public class Pieces {
                 board.put(fylki[i][j],nothing);
             }
         }
+        //every space on the board actually has a piece. Because moving always swaps pieces
 
         for(int i = 0; i < 8; i++){
             Label pawnlabel = new Label("whitePawn");
@@ -79,7 +80,10 @@ public class Pieces {
 
 
 
-
+        //this entire for loop is the most digusting thing ever conceived, but it was just me trying to consolidate
+        //placing all these pieces without manually doing each and every one, or like having a bunch of separate loops
+        //this was actually quite tricky, as all the pieces are mirrored, not translated, and are in like a square
+        //and accounting for all of that was, yeah, tricky.
         for (int i = 0; i < 4; i ++){
             Label rlabel, klabel, blabel, kilabel, qlabel;
 
@@ -96,6 +100,7 @@ public class Pieces {
                 kilabel = new Label("blackKing");
                 qlabel = new Label("blackQueen");
             }
+            //I know it's disgusting but it works
 
             rlabel.getStyleClass().add("aPiece");
             klabel.getStyleClass().add("aPiece");
@@ -124,7 +129,7 @@ public class Pieces {
         }
 
     }
-
+    //all these functions are self explanatory
     public String getPieceType(StackPane square){
         return board.get(square).pieceType;
     }
@@ -148,7 +153,7 @@ public class Pieces {
         board.put(pane2, piece1);
     }
 
-
+    //all these functions are basically the same. Just moving shapes around. Was very fun to do, but not much to explain except Knight maybe
     public Pane createPawn(int color) {
         Color thecolor;
 
@@ -441,6 +446,9 @@ public class Pieces {
         cShape.setTranslateY(circle.getRadius());
 
         Shape curve = Shape.subtract(cShape,rShape);
+        //I create the curve by creating a square and round donut, and then subtract the round donut by the square donut.
+        //then I can move around the inner square and circle, and change the sizes of all 4, to get any kind of curve I want
+        //that can also taper off. You can also then resize and scale a shape that's already created
 
         curve.setFill(thecolor);
 

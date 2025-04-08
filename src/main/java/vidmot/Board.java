@@ -1,7 +1,6 @@
 package vidmot;
 
 import classes.Layout;
-import classes.Variables;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -60,6 +59,7 @@ public class Board {
         onetimer.setTranslateY(335);
         twotimer.setTranslateX(280);
         twotimer.setTranslateY(-335);
+        //aligning the elements and making them fit into the thingy, which I kinda locked myself into
 
         clockAnimation();
 

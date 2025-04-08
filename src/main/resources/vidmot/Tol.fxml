@@ -5,7 +5,7 @@
 
 
 
-<VBox style="-fx-background-color: #333333;" prefHeight="311.0" prefWidth="329.0" spacing="20.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.Tol" >
+<VBox style="-fx-background-color: s#333333;" prefHeight="311.0" prefWidth="329.0" spacing="20.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="vidmot.Tol" >
     <HBox>
         <Label styleClass="padding"></Label>
         <VBox>
@@ -14,7 +14,7 @@
             <Button onAction="#action" styleClass="takki" text="action"/>
             <TextField fx:id="input"></TextField>
             <Label fx:id="outputs" text="hello" style="-fx-text-fill: red;"></Label>
+            <Pane fx:id="contentPane"></Pane>
         </VBox>
     </HBox>
-
 </VBox>

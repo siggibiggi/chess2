@@ -13,27 +13,45 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Layout {
+    //region
     ArrayList<String> mathlist;
+    //called mathlist because I copied from a previous project of mine. This is what the menulist reads from
     String currentFood = "";
+    //called currentFood because I copied from a previous project of mine. Current selected item in menu
     boolean whichrotation = false;
+    //which rotation the board currently is. Probably a way around this, but it's so I can keep track of it for the clocks and killed pieces
     StackPane[][] reitaFylki = new StackPane[8][8];
+    //the squares
     GridPane disgustingGridPane;
+    //so I can initialize everything again on reset. Literally the only reason I had to pass it
     boolean flipboard = false;
+    //if board flips after every move
     private Moves moves;
     boolean lockGame = false;
+    //locks the game, like after checkmate
     boolean runTimer = false;
+    //if the timer runs or not
     int whitePieceCount = 0;
+    //for killed pieces, to move them the right amount to the side and they dont overlap
     int blackPieceCount = 0;
     StackPane currentStackpane;
+    //which stackpane was last clicked on
     StackPane placeholder = new StackPane();
+    //just to avoid a null thing I guess
     private Pieces pieces;
     boolean aPieceIsSelected = false;
+    //to differentiate between selecting a piece and moving it
     Circle[] moveIndicators = new Circle[27];
+    //max amount of moves is a queen on an empty board is 27. Container for the move indicator circles
     int oldColumnValue = 4;
+    //just has to be whatever number
     int oldRowNumber = 4;
     int whoseTurn = 0;
+    //white is 0
     boolean haveTurns = true;
+    //if swap whoseTurn
     boolean allowTimer = true;
+    //I dont even remember
     Label feedback1;
     Label feedback2;
     Pane topPieceContainer;
@@ -47,17 +65,28 @@ public class Layout {
     Pane twoTimeContainer;
     double whiteTimer = 300 * 8;
     double blackTimer = 300 * 8;
+    //multiplying or dividing the things by 8 seems to bring me close to a second so yeah
     boolean showTimers = false;
+    //show the buttons I think, for increasing or decreasing time on clock
     boolean gameHasStarted = false;
+    //something for the ai stuff
     boolean vsAI = false;
+    //opens a bunch of if statements for AI
     boolean checkMateChecking = false;
     boolean checkmateReturnBoolean = false;
+    //checkmates were a whole thing and they used the update thingy to check for every piece, so this is to avoid recursion
     int AIcolor = 1;
     boolean AIvsAI = false;
     double AImoveInterval = 0.0;
+    //for making the AI not instantly finish the game
     boolean justMoved = false;
+    //also to avoid recursion or something
     int amountofMoves = 0;
+    //so AI games dont go on forever king vs king
     int nGames = 0;
+    //for counting the number of AI games. Was gonna do more of this and calculate what percentage of games ended in checkmate
+
+    //endregion
     public void initializeBoard(GridPane theGrid, Label feed1, Label feed2, Pane top, Pane bottom, ListView mensu, Label oneT, Label twoT, HBox sss, HBox ttt, Pane tim, Pane tina){
         feedback1 = feed1;
         feedback2 = feed2;
@@ -77,6 +106,7 @@ public class Layout {
 
         oneTimeContainer.setTranslateY(335);
         twoTimeContainer.setTranslateY(-335);
+        //puts the things in the right place, so it doesnt look weird when flipped
 
         oneTimerBox.setVisible(false);
         twoTimerBox.setVisible(false);
@@ -98,8 +128,11 @@ public class Layout {
             menuList.getItems().clear();
             menuList.getItems().addAll(mathlist);
         }
+        //I don't even understand this part anymore. It made sense at the time I think
+        //obviously to remove those options once the game started
 
         gameHasStarted = true;
+
 
         for(int i = 0; i < 27; i++){
             if(moves.availableMoves[i] == null){
@@ -109,19 +142,23 @@ public class Layout {
 
             moveIndicators[i].setFill(Color.ORANGE);
         }
+        //move indicators are reset. Makes sense to do after clicking any square in any context, so happens every time
 
         if ((oldColumnValue == columnLetter && oldRowNumber == rowNumber) && aPieceIsSelected){
             currentStackpane = placeholder;
             aPieceIsSelected = false;
             return;
         }
+        //if same square is clicked again; deselected
+
+
         //System.out.println(pieces.getPieceType(currentStackpane));
         //System.out.println(pieces.getPieceColor(currentStackpane));
         //System.out.println(moves.squareStatus[columnLetter][rowNumber]);
 
         String selectedPiece = pieces.getPieceType(currentStackpane);
         if ((!selectedPiece.equals("") && !aPieceIsSelected && moves.squareStatus[columnLetter][rowNumber] == whoseTurn) || ((moves.squareStatus[oldColumnValue][oldRowNumber] != 2) && (moves.squareStatus[oldColumnValue][oldRowNumber] == moves.squareStatus[columnLetter][rowNumber]) && aPieceIsSelected)){
-
+            //a piece is not selected
             moves.getMoves(columnLetter, rowNumber, selectedPiece, pieces.getPieceColor(currentStackpane));
             aPieceIsSelected = true;
         } else {
@@ -130,14 +167,19 @@ public class Layout {
                     if (moves.availableMoves[i] == null){
                         break;
                     }
+                    //breaks the loop once there are no more available moves
                     if(moves.availableMoves[i].x == columnLetter && moves.availableMoves[i].y == rowNumber){
+                        //if the current selected square equals an available move
+
                         //System.out.println("White King Position: " + moves.whiteKingPos.x + ", " + moves.whiteKingPos.y);
                         //System.out.println("Black King Position: " + moves.blackKingPos.x + ", " + moves.blackKingPos.y);
 
                         if(pieces.getPieceType(reitaFylki[oldColumnValue][oldRowNumber]).equals("king")){
                             //castling check
+                            //DO NOT LOOK AT CASTLING CHECK. IT'S HARDCODED AND DISGUSTING. THERE IS NOTHING TO BE GAINED
                             if(moves.castlingMove){
                                 if(Math.abs(columnLetter - oldColumnValue) == 2) {
+                                    //checks if king is going 2 spaces, which is impossible in other contexts
                                     //whitelong
                                     if (moves.canCastle[0]) {
                                         //System.out.println("hello0");
@@ -304,6 +346,8 @@ public class Layout {
                             tempsquare = moves.squareStatus[oldColumnValue][oldRowNumber];
                             tempPiece.color = 2;
                             moves.squareStatus[oldColumnValue][oldRowNumber] = 2;
+                            //turns the king "invisible" because he can block the checked square he's moving to, making it "legal"
+                            //was a very annoying bug to discover
 
                             if(isItAttacked(columnLetter,rowNumber,tempcolor)){
                                 tempPiece.color = tempcolor;
@@ -322,6 +366,7 @@ public class Layout {
                                     moves.blackKingPos.y = rowNumber;
                                 }
                             }
+                            //checks if the square that the king tries to move to is checked
                         }
                         //System.out.println("White King Position: " + moves.whiteKingPos.x + ", " + moves.whiteKingPos.y);
                         //System.out.println("Black King Position: " + moves.blackKingPos.x + ", " + moves.blackKingPos.y);
@@ -355,6 +400,7 @@ public class Layout {
                                 break;
                             }
                         }
+                        //tries to move the piece, and swaps back if new position results in check
 
                         pieces.swapPlaces(reitaFylki[oldColumnValue][oldRowNumber],reitaFylki[columnLetter][rowNumber]);
                         checkSwapPiece.pieceType = tempType;
@@ -364,11 +410,13 @@ public class Layout {
                             checkmateReturnBoolean = false;
                             break;
                         }
+                        //idk man. For the checkmate checking.
 
 
 
                         //en passant
                         if (pieces.getPieceType(reitaFylki[oldColumnValue][oldRowNumber]).equals("pawn") && (rowNumber == moves.enPassant.y && columnLetter == moves.enPassant.x) && moves.enPassant.x != -4){
+                            //checks if move is marked en passant move
                             Pieces.chessPiece enPpiece;
                             if (pieces.getPieceColor(reitaFylki[oldColumnValue][oldRowNumber]) == 0){
                                 enPpiece = pieces.board.get(reitaFylki[columnLetter][rowNumber - 1]);
@@ -383,9 +431,11 @@ public class Layout {
                                 enPpiece.pane.setTranslateX(whitePieceCount*40);
                                 whitePieceCount++;
                             }
+                            //only kill in chess that is not on the same square
                             if(whichrotation){
                                 enPpiece.pane.setRotate(enPpiece.pane.getRotate() + 180);
                             }
+                            //idk why I had to do this but they were like upside down I guess sometimes when killed
 
                             enPpiece.pieceType = "";
                             enPpiece.label.setText("");
@@ -414,6 +464,9 @@ public class Layout {
                         if(whichrotation){
                             piece.pane.setRotate(piece.pane.getRotate() + 180);
                         }
+                        //killed piece is rotated based on board rotation. It's actually kinda fucked up, as when you look at the board
+                        //you'd think the pieces never rotate even though I obviously had to program them to because the board rotates and they gotta
+                        //account for that, but I guess I forgot and was dumbfounded why they were upside down when killed
 
                         //killed piece, add to side
                         if(!pieces.getPieceType(reitaFylki[oldColumnValue][oldRowNumber]).equals("")){
@@ -425,6 +478,8 @@ public class Layout {
 
                                 piece.pane.setTranslateX(whitePieceCount*40);
                                 pieces.board.get(reitaFylki[oldColumnValue][oldRowNumber]).pane = new Pane();
+                                //the panes actually make it very easy to rotate things, which was a nice surprise and not preplanned
+                                //sometimes life is good to you, it's rare but you gotta appreciate it
                                 whitePieceCount++;
                             } else {
                                 bottomPieceContainer.getChildren().add(piece.pane);
@@ -438,6 +493,7 @@ public class Layout {
 
                         moves.enPassant.x = -4;
                         moves.enPassant.y = -4;
+                        //marked en passant spot placed out of bounds
 
                         if (pieces.getPieceType(currentStackpane).equals("pawn") && Math.abs(oldRowNumber - rowNumber) == 2){
                             moves.enPassant.x = columnLetter;
@@ -447,15 +503,20 @@ public class Layout {
                                 moves.enPassant.y = rowNumber + 1;
                             }
                         }
+                        //plants the en passant seed. Only available for one move of course, so just have to account for one square at a time
 
                         piece.pieceType = "";
                         piece.label.setText("");
                         piece.color = 2;
                         piece.label.getStyleClass().clear();
+                        //old square is made neutral
+                        //the pieces used to be labels. Call me nostalgic but I don't want to remove it
 
                         if(haveTurns && !checkMateChecking){
                             whoseTurn = (whoseTurn + 1) % 2;
                         }
+                        //some wonkiness through trial and error. All these random booleans were not particularly thought out
+                        //and there was a lot of frustration
 
                         if(flipboard){
                             rotatePieces(disgustingGridPane);
@@ -483,6 +544,7 @@ public class Layout {
             }
 
             moves.getMoves(columnLetter, rowNumber, "", pieces.getPieceColor(currentStackpane));
+            //I think it's so it doesn't break when a non piece square is selected, or when checking for checkmates
 
 
             aPieceIsSelected = false;
@@ -502,9 +564,12 @@ public class Layout {
 
             reitaFylki[moves.availableMoves[i].x][moves.availableMoves[i].y].getChildren().add(moveIndicators[i]);
         }
+        //places and colors the move indicators
+
         if(checkMateChecking){
             return;
         }
+        //avoids anything disturbing happening during the checkmate checking, probably would be an infinite loop as well me thinks
 
         if(whoseTurn == 0){
             feedback1.setText("white to move");
@@ -527,6 +592,8 @@ public class Layout {
         if(!pieces.getPieceType(reitaFylki[7][7]).equals("rook")){
             moves.canCastle[3] = false;
         }
+        //if rooks are ever not on original squares, that specific castling is disabled for the rest of the game
+
         //System.out.println(moves.whiteKingPos.x + " " + moves.whiteKingPos.y);
         //System.out.println(moves.blackKingPos.x + " " + moves.blackKingPos.y);
         if(moves.whiteKingPos.x != 4 || moves.whiteKingPos.y != 0){
@@ -537,11 +604,13 @@ public class Layout {
             moves.canCastle[2] = false;
             moves.canCastle[3] = false;
         }
+        //same deal as with rooks
 
         //promotion
         if(pieces.getPieceType(currentStackpane).equals("pawn")) {
             if (rowNumber == 7 || rowNumber == 0) {
                 if ((!vsAI || AIcolor != whoseTurn) && !AIvsAI) {
+                    //this logic was a surprising amount of headache
                     feedback2.setText("select a piece");
                     lockGame = true;
                     mathlist.add("queen");
@@ -560,6 +629,7 @@ public class Layout {
                         tempPiece.pane.setRotate(tempPiece.pane.getRotate() + 180);
                     }
                 }
+                //AI always just gets a queen
             }
         }
 
@@ -568,6 +638,7 @@ public class Layout {
         //white
         Pieces.chessPiece tempPiece;
         if(isItAttacked(moves.whiteKingPos.x, moves.whiteKingPos.y, 0) && !checkMateChecking && justMoved){
+            //check if king is attacked
             feedback2.setText("white king is checked");
             tempPiece = pieces.board.get(reitaFylki[moves.whiteKingPos.x][moves.whiteKingPos.y]);
             tempPiece.color = 2;
@@ -576,13 +647,16 @@ public class Layout {
             //System.out.println(pieces.getPieceColor(reitaFylki[4][1]));
             //System.out.println(pieces.getPieceType(reitaFylki[4][1]));
             if(maybeCheckmate(0)){
+                //check if all pieces around king are checked
                 moves.squareStatus[moves.whiteKingPos.x][moves.whiteKingPos.y] = 0;
                 tempPiece.color = 0;
                 if (haveTurns) {
                     whoseTurn = 0;
                 }
                 moves.getAllTeamPieces(0);
+                //gets a list of all the pieces
                 if(secondCheckmateCheck(0)){
+                    //checks if checkmate is for real and ends games
                     feedback2.setText("checkmate");
                     feedback1.setText("black wins");
                     lockGame = true;
@@ -652,6 +726,7 @@ public class Layout {
 
         oneTimerBox.setVisible(false);
         twoTimerBox.setVisible(false);
+        //hide clock change buttons
 
         showTimers = false;
 
@@ -666,9 +741,21 @@ public class Layout {
                 Platform.runLater(() -> AImove());
             }
         }
+        //makes opposite AI move
     }
 
     public boolean isItAttacked(int column, int row, int color){
+        //I'm not gonna comment everything here
+        //All I'll say is that the idea is pretty fucking neat and I want to share it as I'm proud of it
+        //turns the square into a sort of queen+knight, and then checks if it can "attack" the relevant pieces on
+        //the relevant squares. If so, it's attacked
+        //really should've been in Moves.java, but there was some annoying reason that I couldn't do it. Don't remember what it was
+
+        //for this and the moves, I did a lot of debugging and repetition via chatgpt. So if it looks too clean, that's why
+        //however, this is all me and my ideas. It was just a nightmare to debug on my own as one mistyped 1 or 0 or whatever
+        //was so hard to find.
+        //All the ideas and core implementation was mine, and I had to do all the initial entries to repeat off of anyway
+
         int oppositeColor = (color + 1) % 2;
 
         // up
@@ -967,6 +1054,7 @@ public class Layout {
             AIvsAI = false;
             AIcolor = 0;
         }
+        //I want AI to stop if I press reset button
         checkmateReturnBoolean = false;
         nGames++;
         System.out.println(nGames);
@@ -1006,6 +1094,7 @@ public class Layout {
             }
         } else if (currentFood.equals("queen")){
             currentFood="";
+            //bugs could arise if I didn't change currentFood to nothing, and you could maybe click something when not supposed to
             Pieces.chessPiece tempPiece = pieces.board.get(currentStackpane);
             tempPiece.pieceType = "queen";
             currentStackpane.getChildren().remove(pieces.getPiecePane(currentStackpane));
@@ -1110,6 +1199,8 @@ public class Layout {
     }
 
     public void LtheClock(){
+        //everything in this function is very self explanatory
+
         if(AIvsAI){
             AImoveInterval = (AImoveInterval + 1) % 2;
             //System.out.println("hello" + AImoveInterval);
@@ -1156,6 +1247,7 @@ public class Layout {
                             (int) Math.floor(conversion / 3600),
                             (conversion / 60 % 60),
                             (conversion % 60)
+                            //got this from chatgpt and am not ashamed of it
                     ));
                 } else {
                     oneLabel.setText(String.format("%02d:%02d",
@@ -1186,10 +1278,12 @@ public class Layout {
     }
 
     public void addtoclocks(int howmuch, int whichcolor){
+
         if(whichcolor==0){
             whiteTimer = whiteTimer + howmuch;
             if(whiteTimer>288000){
                 whiteTimer = 288000 - 1;
+                //can't be higher than 9:59:59 or lower than 0
             }
             if(whiteTimer<0){
                 whiteTimer = 0;
@@ -1205,6 +1299,7 @@ public class Layout {
         }
         int conversion = (int) whiteTimer/8;
         int conversion2 = (int) blackTimer/8;
+        //dividing by 8 seemed to work well enough
         if (conversion >= 3600) {
             oneLabel.setText(String.format("%d:%02d:%02d",
                     (int) Math.floor(conversion / 3600),
@@ -1235,6 +1330,8 @@ public class Layout {
         //System.out.println(whoseTurn);
         //System.out.println(AIcolor);
         //System.out.println();
+
+        //AI thing
         Random rand = new Random();
         int ifruntoolong = 0;
         feedback2.setText("the AI is thinking");
@@ -1260,6 +1357,8 @@ public class Layout {
     }
 
     public boolean secondCheckmateCheck(int color){
+        //tries every move available to see if still check on king. Ugly, but it works and is fast enough
+
         StackPane tempCurrentPane = currentStackpane;
         runTimer = false;
         checkMateChecking = true;
@@ -1297,6 +1396,9 @@ public class Layout {
     }
 
     public void initializetest(){
+        //called initalizetest because I really really was not expecting this to work, but it did
+        //I wanted a clean reset without having to exit out of and go back into the chess game
+
         int conversion = (int) whiteTimer/8;
         int conversion2 = (int) blackTimer/8;
         if (conversion >= 3600) {
@@ -1344,6 +1446,7 @@ public class Layout {
                 currentFood = (String) newValue;
             }
         });
+        //side menu
 
         feedback1.setText("white to move");
         for (int j = 0; j < 8; j++){
@@ -1371,16 +1474,19 @@ public class Layout {
                 disgustingGridPane.add(stackpane, i, 8-j);
             }
         }
+        //creates board and staggers colors. And makes squares clickable.
 
         pieces = new Pieces();
         moves = new Moves();
         pieces.initializePieces(reitaFylki);
+        //places pieces
 
         for (int i = 0; i<27; i++){
             Circle movablecircle = new Circle(15, Color.ORANGE);
             movablecircle.setOpacity(0.6);
             moveIndicators[i] = movablecircle;
         }
+        //move indicators created
 
         for (int j = 0; j<8; j++){
             for (int i = 0; i<8; i++){
@@ -1390,6 +1496,7 @@ public class Layout {
                 //reitaFylki[i][j].getChildren().add(pieces.getPieceLabel(reitaFylki[i][j]));
             }
         }
+        //places pieces on board. Not pretty, but works.
 
         /*
         reitaFylki[3][3].getChildren().add(pieces.getPieceLabel(reitaFylki[3][3]));

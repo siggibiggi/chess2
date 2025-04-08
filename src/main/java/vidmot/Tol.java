@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.NoSuchElementException;
 
+import classes.Tols;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
@@ -24,10 +26,14 @@ public class Tol {
     Label outputs;
     @FXML
     ListView menuList;
+    @FXML
+    Pane contentPane;
 
     String currentFood = "";
     ArrayList<String> mathlist;
     WeightedQuickUnionUF uf;
+
+    private Tols tols;
 
     public void initialize(){
         mathlist = new ArrayList<>();
@@ -41,6 +47,7 @@ public class Tol {
         mathlist.add("unionfind");
         mathlist.add("linkedlist");
         mathlist.add("shellsort");
+        mathlist.add("test");
 
 
         menuList.getItems().addAll(mathlist);
@@ -52,6 +59,10 @@ public class Tol {
                 currentFood = (String) newValue;
             }
         });
+
+        tols = new Tols();
+
+        tols.initializePane(contentPane);
     }
     LinkedListOfStrings list = new LinkedListOfStrings();
 
@@ -149,7 +160,6 @@ public class Tol {
             System.out.println(Arrays.toString(mergesort(temp)));
             input.setText("");
 
-
         }
         //endregion
         else if (currentFood.equals("quicksort")){
@@ -163,6 +173,13 @@ public class Tol {
             } catch (NumberFormatException e) {
             }
             System.out.println(Arrays.toString(quicksort(temp)));
+        } else if (currentFood.equals("test")){
+            currentFood = "testActivated";
+            tols.binaryTree();
+        } else if (currentFood.equals("testActivated")){
+            tols.binaryTreeAdd(Integer.parseInt(input.getText()));
+            tols.dothething();
+            input.setText("");
         }
     }
     //region
