@@ -1039,7 +1039,9 @@ public class Layout {
         oldRowNumber = 4;
         lockGame = false;
         feedback2.setText("");
+        aPieceIsSelected = false;
         whitePieceCount = 0;
+        justMoved = false;
         blackPieceCount = 0;
         topPieceContainer.getChildren().clear();
         bottomPieceContainer.getChildren().clear();
@@ -1176,6 +1178,10 @@ public class Layout {
         } else if (currentFood.equals("play vs advanced AI?")){
             currentFood="";
             vsAI = true;
+            lockGame = false;
+            gameHasStarted = true;
+            AIcolor = 1;
+            whoseTurn = 0;
             mathlist.add("are you black?");
             mathlist.remove("play vs advanced AI?");
             menuList.getItems().clear();
